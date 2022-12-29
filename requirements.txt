@@ -1,0 +1,17 @@
+black==22.12.0
+click==8.1.3
+Flask==2.2.2
+importlib-metadata==5.2.0
+itsdangerous==2.1.2
+Jinja2==3.1.2
+MarkupSafe==2.1.1
+mypy-extensions==0.4.3
+-e git+https://github.com/ApoorvShah/notes-app.git@72aba052a7a85fd3b2e6aec2897d6f95588206d1#egg=notesapp
+pathspec==0.10.3
+platformdirs==2.6.2
+prettier==0.0.7
+tomli==2.0.1
+typed-ast==1.5.4
+typing_extensions==4.4.0
+Werkzeug==2.2.2
+zipp==3.11.0
