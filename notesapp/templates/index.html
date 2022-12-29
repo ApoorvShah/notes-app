@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Notes</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="static/bootstrap.css" rel="stylesheet">
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+      aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-sm-2" type="search" placeholder="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="form-group">
+    <div class="form-group row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Note</label>
+      <div class="col-sm-10">
+        <input type="text" readonly="" class="form-control-plaintext" id="staticEmail"
+          value="Add your first note here..">
+      </div>
+    </div>
+    <form class="input-group mb-3" action="/" method="POST">
+      <input class="form-control" type="text" name="note">
+      <input class="btn btn-primary" type="submit" value="Add note">
+    </form>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Note</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in range(notes|length) %}
+      <tr class="table-active">
+        <td>{{ notes[i] }}</td>
+        <td>
+          <form action="/" method="post">
+            <input type="hidden" name="delete" value="{{ i }}">
+            <input type="submit" value="Delete">
+          </form>
+        </td>
+        <td>
+          <form action="/" method="post">
+            <input type="hidden" name="edit" value="{{ i }}">
+            <input type="submit" value="Edit">
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+</html>
