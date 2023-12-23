@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Note Taking App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Note Taking App</h1>
+
+    <!-- Form to Add Notes -->
+    <form id="noteForm">
+      <label for="noteTitle">Note Title:</label>
+      <input type="text" id="noteTitle" placeholder="Type your note title..." required>
+
+      <label for="noteInput">Note Text:</label>
+      <textarea id="noteInput" placeholder="Type your note..." required></textarea>
+
+      <button type="submit">Add Note</button>
+    </form>
+
+    <!-- Search Input -->
+    <input type="text" id="searchInput" placeholder="Search notes...">
+
+    <!-- Section to Display Titles Only -->
+    <section id="titlesList">
+      <!-- Titles will be displayed here -->
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
