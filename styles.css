@@ -92,6 +92,7 @@ section {
 
 .show-details-button,
 .delete-button,
+.edit-button,
 .copy-button {
   background-color: #1db954;
   color: #fff;
@@ -103,6 +104,7 @@ section {
 
 .show-details-button:hover,
 .delete-button:hover,
+.edit-button:hover,
 .copy-button:hover {
   background-color: #25b960;
 }

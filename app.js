@@ -49,6 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
         showNoteDetails(title);
       } else if (target.classList.contains("copy-button")) {
         copyNoteToClipboard(title);
+      } else if (target.classList.contains("edit-button")) {
+        editNote(title);
       }
     } else if (target.classList.contains("title")) {
       showNoteDetails(target.textContent);
@@ -69,10 +71,12 @@ document.addEventListener("DOMContentLoaded", function () {
       "show-details-button",
     );
     const copyButton = createButton("Copy", "copy-button");
+    const editButton = createButton("Edit", "edit-button");
     const deleteButton = createButton("Delete", "delete-button");
 
     newTitle.appendChild(showDetailsButton);
     newTitle.appendChild(copyButton);
+    newTitle.appendChild(editButton);
     newTitle.appendChild(deleteButton);
 
     return newTitle;
@@ -142,6 +146,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // You can add a notification or any other feedback here
     alert("Text copied to clipboard!");
+  }
+
+  function editNote(title) {
+    const notes = JSON.parse(localStorage.getItem("notes")) || [];
+    const selectedNote = notes.find((note) => note.title === title);
+
+    if (selectedNote) {
+      // Set the current note values in the form for editing
+      noteTitleInput.value = selectedNote.title;
+      noteInput.value = selectedNote.text;
+
+      // Delete the existing note
+      deleteNoteFromLocalStorage(title);
+
+      // Remove the note from the UI
+      titlesList.innerHTML = "";
+
+      // Load the updated list of notes
+      loadTitlesFromLocalStorage();
+    }
   }
 
   function clearAllNotes() {
