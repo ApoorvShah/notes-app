@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (target.tagName === "BUTTON") {
       if (target.classList.contains("delete-button")) {
-        const title = target.previousSibling.textContent;
+        const title = target.previousSibling.previousSibling.textContent;
         console.log(title)
         deleteNoteFromLocalStorage(title);
         target.parentElement.remove();
