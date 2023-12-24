@@ -81,6 +81,7 @@ section {
 
 .title span {
   color: #fff;
+  flex-grow: 1;
 }
 
 .buttons-container {
@@ -90,7 +91,8 @@ section {
 }
 
 .show-details-button,
-.delete-button {
+.delete-button,
+.copy-button {
   background-color: #1db954;
   color: #fff;
   padding: 8px;
@@ -100,8 +102,16 @@ section {
 }
 
 .show-details-button:hover,
-.delete-button:hover {
+.delete-button:hover,
+.copy-button:hover {
   background-color: #25b960;
 }
 
-/* Add more styles based on your design preferences */
+.note {
+  border: 1px solid #555;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background-color: #1e1e1e;
+  position: relative;
+}

@@ -5,19 +5,21 @@ document.addEventListener("DOMContentLoaded", function () {
   const titlesList = document.getElementById("titlesList");
   const searchInput = document.getElementById("searchInput");
   const clearAllButton = document.getElementById("clearAllButton");
+
   clearAllButton.addEventListener("click", function () {
     // Clear all notes from local storage
     clearAllNotes();
     // Clear the titlesList on the page
     titlesList.innerHTML = "";
   });
+
   noteForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const noteTitle = noteTitleInput.value.trim();
     const noteText = noteInput.value.trim();
 
-    if (noteTitle !== "" && noteText !== "") {
+    if (noteTitle && noteText) {
       const newTitle = createNoteElement(noteTitle);
       titlesList.appendChild(newTitle);
 
@@ -37,13 +39,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const target = event.target;
 
     if (target.tagName === "BUTTON") {
+      const title =
+        target.parentElement.querySelector(".title-span").textContent;
+
       if (target.classList.contains("delete-button")) {
-        const title = target.previousSibling.previousSibling.textContent;
-        console.log(title)
         deleteNoteFromLocalStorage(title);
         target.parentElement.remove();
       } else if (target.classList.contains("show-details-button")) {
-        showNoteDetails(target.previousSibling.textContent);
+        showNoteDetails(title);
+      } else if (target.classList.contains("copy-button")) {
+        copyNoteToClipboard(title);
       }
     } else if (target.classList.contains("title")) {
       showNoteDetails(target.textContent);
@@ -56,19 +61,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const titleSpan = document.createElement("span");
     titleSpan.textContent = title;
+    titleSpan.classList.add("title-span");
     newTitle.appendChild(titleSpan);
 
-    const showDetailsButton = document.createElement("button");
-    showDetailsButton.textContent = "Show Details";
-    showDetailsButton.classList.add("show-details-button");
-    newTitle.appendChild(showDetailsButton);
+    const showDetailsButton = createButton(
+      "Show Details",
+      "show-details-button",
+    );
+    const copyButton = createButton("Copy", "copy-button");
+    const deleteButton = createButton("Delete", "delete-button");
 
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.classList.add("delete-button");
+    newTitle.appendChild(showDetailsButton);
+    newTitle.appendChild(copyButton);
     newTitle.appendChild(deleteButton);
 
     return newTitle;
+  }
+
+  function createButton(text, className) {
+    const button = document.createElement("button");
+    button.textContent = text;
+    button.classList.add(className);
+    return button;
   }
 
   function filterTitles(searchTerm) {
@@ -97,18 +111,37 @@ document.addEventListener("DOMContentLoaded", function () {
     loadTitlesFromLocalStorage();
   }
 
-  // Function to delete note from local storage
   function deleteNoteFromLocalStorage(title) {
-    console.log(title)
     let notes = JSON.parse(localStorage.getItem("notes")) || [];
-    console.log(notes)
     const index = notes.findIndex((note) => note.title === title);
-    console.log(index)
+
     if (index !== -1) {
       notes.splice(index, 1);
       localStorage.setItem("notes", JSON.stringify(notes));
       loadTitlesFromLocalStorage();
     }
+  }
+
+  function copyNoteToClipboard(title) {
+    const notes = JSON.parse(localStorage.getItem("notes")) || [];
+    const selectedNote = notes.find((note) => note.title === title);
+
+    if (selectedNote) {
+      const textToCopy = `Title: ${selectedNote.title}\n\nText: ${selectedNote.text}`;
+      copyToClipboard(textToCopy);
+    }
+  }
+
+  function copyToClipboard(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    // You can add a notification or any other feedback here
+    alert("Text copied to clipboard!");
   }
 
   function clearAllNotes() {
@@ -117,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function loadTitlesFromLocalStorage() {
     let notes = JSON.parse(localStorage.getItem("notes")) || [];
-
     notes.sort((a, b) => a.title.localeCompare(b.title));
 
     titlesList.innerHTML = "";
